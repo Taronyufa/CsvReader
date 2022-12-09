@@ -10,12 +10,15 @@ class CsvReader:
 
         csv_reader = csv.DictReader(open('titanic.csv', mode='r'))
         for row in csv_reader:
+
             #extracting all the elements from the current row and replacing the "," in the name element
             dummy = [*row.values()]
             dummy[3] = dummy[3].replace(',', '')
-            for i in range(len(dummy) - 1):
+
+            #replacing every blank space with None
+            for i in range(len(dummy)):
                 if dummy[i] == '':
-                    dummy[i] = 'None'
+                    dummy[i] = None
             self.titanic.append(dummy)
 
         #trying to optimize the code smh
