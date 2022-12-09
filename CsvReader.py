@@ -7,18 +7,22 @@ class CsvReader:
     titanic = []
 
     def __init__(self):
-        with open('titanic.csv', mode='r') as csv_file:
-            csv_reader = csv.DictReader(csv_file)
-            line_count = 0
-            for row in csv_reader:
-                if line_count == 0:
-                    self.keys = {", ".join(row)}
 
-                #extracting all the elements from the current row and replacing the "," in the name element
-                dummy = [*row.values()]
-                dummy[3] = dummy[3].replace(',', '')
-                self.titanic.append(dummy)
-                line_count += 1
+        csv_reader = csv.DictReader(open('titanic.csv', mode='r'))
+        for row in csv_reader:
+            #extracting all the elements from the current row and replacing the "," in the name element
+            dummy = [*row.values()]
+            dummy[3] = dummy[3].replace(',', '')
+            for i in range(len(dummy) - 1):
+                if dummy[i] == '':
+                    dummy[i] = 'None'
+            self.titanic.append(dummy)
+
+        #trying to optimize the code smh
+        csv_reader = csv.reader(open('titanic.csv', mode='r'))
+        self.keys = csv_reader.__next__()
+
+
 
     def __str__(self):
         file = str(self.keys)
