@@ -3,11 +3,9 @@ import csv
 
 class CsvReader:
 
-    keys = {}
-    titanic = []
-
     def __init__(self):
 
+        self.titanic = []
         csv_reader = csv.DictReader(open('titanic.csv', mode='r'))
         for row in csv_reader:
 
@@ -34,6 +32,21 @@ class CsvReader:
         return file
 
 
+    def printColumn(self, key):
+
+        #taking the index of key
+        if key in self.keys:
+            index = self.keys.index(key)
+        else:
+            return f'please write a valid key between {self.keys}'
+
+        #extracting all the elements that need to be printed
+        string = ""
+        for i in range(len(self.titanic)):
+            string += "\n" + self.titanic[i][index]
+        return string
+
 prova = CsvReader()
 
 print(prova)
+print(prova.printColumn('Name'))
