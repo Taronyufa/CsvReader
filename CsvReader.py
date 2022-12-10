@@ -53,4 +53,3 @@ prova = CsvReader()
 print(prova)
 print(prova.print_column('Name'))
 print('\n' + prova.print_row(1))
-
