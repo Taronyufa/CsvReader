@@ -41,11 +41,17 @@ class CsvReader:
             string += '\n' + self.titanic[i][index]
         return string
 
+    def print_by_value(self, key, value):
+        pass
+
     def print_row(self, key):
         if (key < 892) and (key > 0):
             return str(self.titanic[key - 1])
         else:
             return 'index out of bound'
+
+    def statistic_sex(self):
+        pass
 
 
 prova = CsvReader()
