@@ -1,10 +1,9 @@
 import csv
 
 
-class csvReader:
+class CsvReader:
 
     def __init__(self):
-
         self.titanic = []
         csv_reader = csv.DictReader(open('titanic.csv', mode='r'))
         for row in csv_reader:
@@ -30,19 +29,28 @@ class csvReader:
         return file
 
     def print_column(self, key):
+        # checking if the key parameter is a valid key
         if key in self.keys:
             index = self.keys.index(key)
         else:
             return f'please return a valid key between {self.keys}'
 
+        # taking all the elements at key index
         string = ''
         for i in range(len(self.titanic)):
             string += '\n' + self.titanic[i][index]
         return string
 
+    def print_row(self, key):
+        if (key < 892) and (key > 0):
+            return str(self.titanic[key - 1])
+        else:
+            return 'index out of bound'
 
-prova = csvReader()
+
+prova = CsvReader()
 
 print(prova)
 print(prova.print_column('Name'))
+print('\n' + prova.print_row(1))
 
