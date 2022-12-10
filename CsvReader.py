@@ -7,7 +7,6 @@ class CsvReader:
         self.titanic = []
         csv_reader = csv.DictReader(open('titanic.csv', mode='r'))
         for row in csv_reader:
-
             # removing the ',' from the Name
             dummy = [*row.values()]
             dummy[3] = dummy[3].replace(',', '')
@@ -28,7 +27,7 @@ class CsvReader:
             file += "\n" + str(self.titanic[i])
         return file
 
-    def print_column(self, key):
+    def get_column(self, key):
         # checking if the key parameter is a valid key
         if key in self.keys:
             index = self.keys.index(key)
@@ -41,21 +40,34 @@ class CsvReader:
             string += '\n' + self.titanic[i][index]
         return string
 
-    def print_by_value(self, key, value):
-        pass
+    def get_by_value(self, key, value):
+        # checking if the key parameter is a valid key
+        if key in self.keys:
+            index = self.keys.index(key)
+        else:
+            return f'please return a valid key between {self.keys}'
 
-    def print_row(self, key):
+        # taking all the element that have the value at the key element
+        string = ''
+        for i in range(len(self.titanic)):
+            if self.titanic[i][index] == value:
+                string += '\n' + str(self.titanic[i])
+        return string
+
+    def get_row(self, key):
         if (key < 892) and (key > 0):
             return str(self.titanic[key - 1])
         else:
             return 'index out of bound'
 
-    def statistic_sex(self):
+    def get_stats(self, key):
         pass
 
 
 prova = CsvReader()
 
 print(prova)
-print(prova.print_column('Name'))
-print('\n' + prova.print_row(1))
+print(prova.get_column('Name'))
+print('\n' + prova.get_row(1))
+print(prova.get_by_value('Age', '22'))
+print(prova.get_stats('Sex'))
