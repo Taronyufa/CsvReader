@@ -6,7 +6,9 @@ class CsvReader:
     def __init__(self):
         self.titanic = []
         csv_reader = csv.DictReader(open('titanic.csv', mode='r'))
+        self.lenght = 0
         for row in csv_reader:
+            self.lenght += 1
             # removing the ',' from the Name
             dummy = [*row.values()]
             dummy[3] = dummy[3].replace(',', '')
@@ -55,7 +57,7 @@ class CsvReader:
         return string
 
     def get_row(self, key):
-        if (key < 892) and (key > 0):
+        if (key < self.lenght) and (key > 0):
             return str(self.titanic[key - 1])
         else:
             return 'index out of bound'
@@ -64,8 +66,11 @@ class CsvReader:
         # percent of male or survived in the ship
         if (key == 'Survived') or (key == 'Sex'):
             index = self.keys.index(key)
-
-            pass
+            dummy = dict.fromkeys([row[index] for row in self.titanic])
+            string = ''
+            for keys in dummy:
+                string += f'{([row[index] for row in self.titanic].count(keys) / self.lenght) * 100}% of {keys} on titanic\n'
+            return string
 
         # takes the values of all the passenger and then does the average
         elif (key == 'Fare') or (key == 'Age'):
@@ -74,7 +79,7 @@ class CsvReader:
             for i in range(len(self.titanic)):
                 if self.titanic[i][index] is not None:
                     result += float(self.titanic[i][index])
-            return f'\n average {key} in titanic passenger is ' + str(result // 891)
+            return f'\n average {key} in titanic passenger is ' + str(result // self.lenght)
 
         # no correct values in input
         else:
@@ -87,4 +92,4 @@ print(prova)
 print(prova.get_column('Name'))
 print('\n' + prova.get_row(50))
 print(prova.get_by_value('Age', '22'))
-print(prova.get_stats('Fare'))
+print(prova.get_stats('Survived'))
