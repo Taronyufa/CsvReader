@@ -61,13 +61,30 @@ class CsvReader:
             return 'index out of bound'
 
     def get_stats(self, key):
-        pass
+        # percent of male or survived in the ship
+        if (key == 'Survived') or (key == 'Sex'):
+            index = self.keys.index(key)
+
+            pass
+
+        # takes the values of all the passenger and then does the average
+        elif (key == 'Fare') or (key == 'Age'):
+            index = self.keys.index(key)
+            result = 0
+            for i in range(len(self.titanic)):
+                if self.titanic[i][index] is not None:
+                    result += float(self.titanic[i][index])
+            return f'\n average {key} in titanic passenger is ' + str(result // 891)
+
+        # no correct values in input
+        else:
+            return '\n insert a valid key between [Survived, Sex, Fare, Age]'
 
 
 prova = CsvReader()
 
 print(prova)
 print(prova.get_column('Name'))
-print('\n' + prova.get_row(1))
+print('\n' + prova.get_row(50))
 print(prova.get_by_value('Age', '22'))
-print(prova.get_stats('Sex'))
+print(prova.get_stats('Fare'))
